@@ -1,3 +1,5 @@
+import { isSupabaseConfigured, supabaseUserStore } from '../lib/supabase';
+
 export type PortalRole = 'student' | 'admin';
 
 export interface AuthUser {
@@ -24,8 +26,28 @@ const createDefaultUser = (role: PortalRole): AuthUser => {
 
 const isBrowser = typeof window !== 'undefined';
 
+const persistProfileToSupabase = async (profile: AuthUser) => {
+  if (!isSupabaseConfigured || !isBrowser) {
+    return;
+  }
+
+  const profileData = {
+    student_profile: null,
+    admin_profile: null,
+  };
+
+  try {
+    await supabaseUserStore.saveProfile({
+      ...profile,
+      profileData,
+    });
+  } catch (error) {
+    console.warn('Supabase profile sync failed, continuing with local demo data.', error);
+  }
+};
+
 export const authService = {
-  login: (user: Partial<AuthUser> & { role: PortalRole }): AuthUser => {
+  login: async (user: Partial<AuthUser> & { role: PortalRole }): Promise<AuthUser> => {
     const profile: AuthUser = {
       id: user.id || `${user.role}_${Date.now()}`,
       role: user.role,
@@ -37,6 +59,8 @@ export const authService = {
     if (isBrowser) {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
     }
+
+    await persistProfileToSupabase(profile);
 
     return profile;
   },

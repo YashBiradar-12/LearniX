@@ -9,10 +9,10 @@ export const PortalSelection: React.FC = () => {
   const [mode, setMode] = useState<PortalRole>('student');
   const [form, setForm] = useState({ name: '', email: '', password: '' });
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const user = authService.login({
+    const user = await authService.login({
       role: mode,
       name: form.name || (mode === 'student' ? 'Student User' : 'Admin User'),
       email: form.email || (mode === 'student' ? 'student@learnix.com' : 'admin@learnix.com'),
