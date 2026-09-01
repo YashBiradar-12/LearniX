@@ -13,11 +13,11 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   const variantStyles = {
     default:
-      'glass-card rounded-3xl p-6',
+      'card-base',
     elevated:
-      'glass-card rounded-3xl p-6 hover:-translate-y-0.5 hover:border-violet-300/70 transition-all duration-300',
+      'card-elevated',
     bordered:
-      'soft-card rounded-3xl p-6 border border-violet-200 bg-gradient-to-br from-violet-50 to-cyan-50',
+      'card-bordered',
   };
 
   return (

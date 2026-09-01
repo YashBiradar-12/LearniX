@@ -70,7 +70,7 @@ export const Materials: React.FC = () => {
   };
 
   const getFileIcon = (_fileType: string) => {
-    return <FileText size={24} className="text-violet-200" />;
+    return <FileText size={24} className="text-olive-600" />;
   };
 
   const getStatusBadge = (status: string) => {

@@ -7,7 +7,7 @@ import {
   AlertCircle,
   Zap,
   ArrowRight,
-  Sparkles,
+  BookMarked,
 } from 'lucide-react';
 import { Card, Button, LoadingSpinner } from '../components/ui';
 import { SummaryCard } from '../components/dashboard/SummaryCard';
@@ -55,7 +55,7 @@ export const Dashboard: React.FC = () => {
   }
 
   if (!student || !performance) {
-    return <div className="p-8 text-slate-200">Error loading data</div>;
+    return <div className="p-8 text-neutral-700">Error loading data</div>;
   }
 
   const weakTopics = performance.topicWisePerformance.filter((t) =>
@@ -71,45 +71,73 @@ export const Dashboard: React.FC = () => {
   return (
     <div className="page-shell">
       <div className="page-max">
-        <div className="mb-8 flex flex-col gap-4 md:mb-10">
-          <div className="inline-flex w-max items-center gap-2 rounded-full border border-violet-200 bg-violet-500/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.24em] text-violet-700 dark:border-violet-400/30 dark:text-violet-200">
-            <Sparkles size={12} />
-            AI study engine
+        {/* Welcome Section */}
+        <div className="mb-10">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-lg border border-olive-300 bg-olive-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-olive-700">
+            <BookMarked size={14} />
+            Learning Dashboard
           </div>
-          <div>
-            <h1 className="text-3xl text-slate-900 dark:text-white md:text-5xl">
-              Good morning, {student.name.split(' ')[0]} 👋
-            </h1>
-            <p className="mt-3 max-w-xl text-lg text-slate-600 dark:text-slate-300">
-              Ready to prepare smarter?
-            </p>
-          </div>
+          <h1 className="mb-2 font-serif text-4xl md:text-5xl font-bold text-olive-900">
+            Good morning, {student.name.split(' ')[0]}
+          </h1>
+          <p className="max-w-2xl text-lg text-neutral-700">
+            Here's your personalized learning overview. Let's make today productive.
+          </p>
         </div>
 
-        <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <SummaryCard title="Tests Completed" value={performance.testsCompleted} icon={BarChart3} subtitle="This semester" trend={2} color="primary" />
-          <SummaryCard title="Current Accuracy" value={`${Math.round(performance.overallAccuracy)}%`} icon={TrendingUp} subtitle="Average score" trend={5} color="success" />
-          <SummaryCard title="Weak Topics" value={weakTopics.length} icon={Target} subtitle="Need attention" color="warning" />
-          <SummaryCard title="Preparation Level" value="65%" icon={Zap} subtitle="Syllabus coverage" trend={3} color="primary" />
+        {/* Key Metrics */}
+        <div className="mb-10 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <SummaryCard
+            title="Tests Completed"
+            value={performance.testsCompleted}
+            icon={BarChart3}
+            subtitle="This semester"
+            trend={2}
+            color="primary"
+          />
+          <SummaryCard
+            title="Current Accuracy"
+            value={`${Math.round(performance.overallAccuracy)}%`}
+            icon={TrendingUp}
+            subtitle="Average score"
+            trend={5}
+            color="success"
+          />
+          <SummaryCard
+            title="Weak Topics"
+            value={weakTopics.length}
+            icon={Target}
+            subtitle="Need attention"
+            color="warning"
+          />
+          <SummaryCard
+            title="Syllabus Coverage"
+            value="65%"
+            icon={Zap}
+            subtitle="Preparation level"
+            trend={3}
+            color="primary"
+          />
         </div>
 
-        <div className="mb-8">
-          <Card variant="elevated" className="hero-panel relative overflow-hidden rounded-[28px] p-6 md:p-8">
+        {/* CTA Banner */}
+        <div className="mb-10">
+          <Card variant="elevated" className="relative overflow-hidden border-olive-300 bg-gradient-to-br from-olive-50 to-white">
             <div className="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
-              <div className="max-w-2xl">
-                <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-500/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-violet-700 dark:border-violet-400/30 dark:text-violet-200">
-                  <Sparkles size={12} />
-                  Next up
+              <div className="flex-1">
+                <div className="mb-3 inline-flex items-center gap-2 rounded-lg border border-olive-300 bg-olive-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-olive-700">
+                  <BookMarked size={12} />
+                  Ready to practice?
                 </div>
-                <h2 className="mb-3 text-2xl text-slate-900 dark:text-white md:text-4xl">
-                  Prepare for your next exam
+                <h2 className="mb-3 font-serif text-3xl md:text-4xl font-bold text-olive-900">
+                  Generate Your Practice Paper
                 </h2>
-                <p className="max-w-xl text-base text-slate-600 dark:text-slate-300 md:text-lg">
-                  Generate a personalized practice paper based on your teacher's pattern and your weak areas.
+                <p className="max-w-lg text-base text-neutral-700">
+                  Create a personalized exam practice paper based on your teacher's patterns and weak areas. Start improving today.
                 </p>
               </div>
-              <Link to="/generate-paper">
-                <Button size="lg" className="whitespace-nowrap">
+              <Link to="/student/generate-paper" className="flex-shrink-0">
+                <Button size="lg" className="gap-2 whitespace-nowrap">
                   Generate Paper
                   <ArrowRight size={18} />
                 </Button>
@@ -118,11 +146,15 @@ export const Dashboard: React.FC = () => {
           </Card>
         </div>
 
+        {/* Main Content Grid */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          {/* Focus Areas */}
           <div className="lg:col-span-2">
             <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-2xl text-slate-900 dark:text-white">Your Focus Areas</h2>
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Live</span>
+              <h2 className="font-serif text-2xl font-bold text-olive-900">Your Focus Areas</h2>
+              <span className="text-xs font-semibold uppercase tracking-wider text-olive-700 bg-olive-100 px-2.5 py-1 rounded">
+                {performance.topicWisePerformance.length} Topics
+              </span>
             </div>
             <div className="space-y-3">
               {performance.topicWisePerformance.map((topic) => (
@@ -131,21 +163,28 @@ export const Dashboard: React.FC = () => {
             </div>
           </div>
 
+          {/* Sidebar */}
           <div className="space-y-6">
+            {/* Recent Activity */}
             <div>
-              <h2 className="mb-4 text-xl text-slate-900 dark:text-white">Recent Activity</h2>
-              <Card>
+              <h3 className="mb-4 font-serif text-xl font-bold text-olive-900">Recent Activity</h3>
+              <Card className="p-6">
                 <div className="space-y-4">
                   {recentActivities.map((activity, idx) => (
-                    <div key={idx} className="flex gap-3 border-b border-slate-200 pb-4 last:border-0 last:pb-0 dark:border-slate-800/80">
-                      <div className="mt-1 flex h-9 w-9 items-center justify-center rounded-xl bg-violet-500/10 text-violet-700 dark:text-violet-200">
+                    <div
+                      key={idx}
+                      className="flex gap-3 border-b border-olive-200 pb-4 last:border-0 last:pb-0"
+                    >
+                      <div className="flex-shrink-0 flex h-10 w-10 items-center justify-center rounded-lg bg-olive-100 text-olive-700">
                         {activity.type === 'test' && <BarChart3 size={18} />}
                         {activity.type === 'analysis' && <AlertCircle size={18} />}
                         {activity.type === 'paper' && <Zap size={18} />}
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-slate-700 dark:text-slate-100">{activity.message}</p>
-                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">{activity.time}</p>
+                        <p className="text-sm font-medium text-neutral-900">{activity.message}</p>
+                        <p className="mt-1 text-xs uppercase tracking-wider text-neutral-600">
+                          {activity.time}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -153,37 +192,66 @@ export const Dashboard: React.FC = () => {
               </Card>
             </div>
 
-            <Card className="bg-gradient-to-br from-violet-500/10 via-slate-900 to-cyan-500/5 border border-violet-400/20">
+            {/* Help CTA */}
+            <Card className="bg-gradient-to-br from-olive-50 to-white border-olive-300">
               <div className="text-center">
-                <h3 className="mb-2 text-xl text-slate-900 dark:text-white">Need help?</h3>
-                <p className="mb-4 text-sm text-slate-600 dark:text-slate-300">
-                  Get instant support from peers or teachers
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-olive-200 text-olive-700 mx-auto">
+                  <HelpIcon size={20} />
+                </div>
+                <h3 className="mb-2 font-serif text-lg font-bold text-olive-900">
+                  Need Guidance?
+                </h3>
+                <p className="mb-4 text-sm text-neutral-700">
+                  Connect with peers or teachers for instant help
                 </p>
-                <Link to="/doubts" className="block w-full">
+                <Link to="/student/doubts">
                   <Button variant="primary" fullWidth size="sm">
-                    Connect Now
+                    Get Help
                   </Button>
                 </Link>
               </div>
             </Card>
 
-            <Card>
-              <div className="mb-3 flex items-center gap-2">
-                <Zap size={18} className="text-amber-600 dark:text-amber-300" />
-                <h3 className="text-xl text-slate-900 dark:text-white">Recommended</h3>
-              </div>
-              <p className="mb-4 text-sm text-slate-600 dark:text-slate-300">
-                Focus on {weakTopics[0]?.name || 'Electrostatics'} next. Your accuracy here is {weakTopics[0]?.studentAccuracy || 43}%.
-              </p>
-              <Link to="/generate-paper">
-                <Button variant="secondary" fullWidth size="sm">
-                  Generate Weak-Area Paper
-                </Button>
-              </Link>
-            </Card>
+            {/* Recommendation */}
+            {weakTopics.length > 0 && (
+              <Card className="border-olive-300">
+                <div className="mb-3 flex items-center gap-2">
+                  <Target size={18} className="text-olive-700" />
+                  <h3 className="font-serif text-lg font-bold text-olive-900">Recommended</h3>
+                </div>
+                <p className="mb-4 text-sm text-neutral-700">
+                  Focus on <span className="font-semibold text-olive-900">{weakTopics[0]?.name || 'weak areas'}</span>. Your accuracy here is{' '}
+                  <span className="font-semibold text-orange-600">{weakTopics[0]?.studentAccuracy || 43}%</span>.
+                </p>
+                <Link to="/student/generate-paper">
+                  <Button variant="secondary" fullWidth size="sm">
+                    Practice Weak Areas
+                  </Button>
+                </Link>
+              </Card>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 };
+
+// Helper icon component for documentation purposes
+const HelpIcon = ({ size = 24 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+    <line x1="9" y1="9" x2="9.01" y2="9" />
+    <line x1="15" y1="9" x2="15.01" y2="9" />
+  </svg>
+);

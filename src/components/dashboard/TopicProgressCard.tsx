@@ -24,9 +24,9 @@ export const TopicProgressCard: React.FC<TopicProgressCardProps> = ({ topic }) =
   } as const;
 
   return (
-    <Card className="p-4">
+    <Card className="p-5">
       <div className="mb-4 flex items-center justify-between gap-3">
-        <h4 className="text-lg font-bold text-slate-900 dark:text-white">{topic.name}</h4>
+        <h4 className="font-semibold text-neutral-900">{topic.name}</h4>
         <Badge variant={difficultyColors[topic.difficulty]}>
           {difficultyLabels[topic.difficulty]}
         </Badge>
@@ -36,7 +36,7 @@ export const TopicProgressCard: React.FC<TopicProgressCardProps> = ({ topic }) =
         label={`Accuracy: ${topic.studentAccuracy}%`}
         size="sm"
       />
-      <p className="mt-3 text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+      <p className="mt-3 text-xs uppercase tracking-wider text-neutral-600">
         {topic.questionsAttempted} questions attempted
       </p>
     </Card>

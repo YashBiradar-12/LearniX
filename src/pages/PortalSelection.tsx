@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, GraduationCap, ArrowRight, Mail, Lock } from 'lucide-react';
+import { BookMarked, GraduationCap, ArrowRight, Mail, Lock } from 'lucide-react';
 import { Card, Button } from '../components/ui';
 import { authService, PortalRole } from '../services/authService';
 
@@ -28,91 +28,112 @@ export const PortalSelection: React.FC = () => {
   };
 
   return (
-    <div className="page-shell flex items-center justify-center">
-      <div className="page-max max-w-5xl">
-        <div className="mb-8 text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-500/10 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.26em] text-violet-700 dark:border-violet-400/30 dark:text-violet-200">
-            LEARNIX
+    <div className="page-shell flex items-center justify-center min-h-screen bg-gradient-to-br from-olive-100 via-warm-white to-olive-50">
+      <div className="page-max w-full max-w-5xl px-4">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-lg border border-olive-300 bg-olive-50 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-olive-700">
+            <BookMarked size={16} />
+            Smart Learning Platform
           </div>
-          <h1 className="text-4xl font-black text-slate-900 dark:text-white md:text-6xl">
-            Welcome back
+          <h1 className="font-serif text-5xl md:text-6xl font-bold text-olive-900 mb-4">
+            Welcome to LEARNIX
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
-            Sign in to your student or admin portal to continue.
+          <p className="mx-auto max-w-2xl text-lg text-neutral-700">
+            Sign in to access your personalized learning portal. Choose your role to continue.
           </p>
         </div>
 
-        <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+        {/* Portal Selection */}
+        <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
           <button
             type="button"
             onClick={() => setMode('student')}
-            className={`rounded-[24px] border p-5 text-left transition ${mode === 'student' ? 'border-violet-400 bg-violet-500/10' : 'border-slate-200 bg-white/80'}`}
+            className={`card-base text-left cursor-pointer transform transition-all duration-200 hover:shadow-md ${
+              mode === 'student'
+                ? 'border-olive-600 bg-olive-50 ring-2 ring-olive-600'
+                : 'border-olive-200 hover:border-olive-300'
+            }`}
           >
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-cyan-400 shadow-[0_14px_34px_rgba(139,92,246,0.35)]">
-              <GraduationCap className="text-white" size={22} />
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-olive-600 to-olive-700">
+              <GraduationCap className="text-white" size={24} />
             </div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-violet-600">Student</p>
-            <h2 className="mt-2 text-2xl font-black text-slate-900">Student portal</h2>
+            <p className="text-xs font-semibold uppercase tracking-wider text-olive-700">Student</p>
+            <h2 className="mt-2 text-2xl font-serif font-bold text-olive-900">Student Portal</h2>
+            <p className="mt-2 text-sm text-neutral-600">Access your courses, tests, and learning materials</p>
           </button>
 
           <button
             type="button"
             onClick={() => setMode('admin')}
-            className={`rounded-[24px] border p-5 text-left transition ${mode === 'admin' ? 'border-cyan-400 bg-cyan-500/10' : 'border-slate-200 bg-white/80'}`}
+            className={`card-base text-left cursor-pointer transform transition-all duration-200 hover:shadow-md ${
+              mode === 'admin'
+                ? 'border-olive-600 bg-olive-50 ring-2 ring-olive-600'
+                : 'border-olive-200 hover:border-olive-300'
+            }`}
           >
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-violet-500 shadow-[0_14px_34px_rgba(34,211,238,0.25)]">
-              <ShieldCheck className="text-white" size={22} />
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-olive-700 to-olive-800">
+              <BookMarked className="text-white" size={24} />
             </div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-600">Admin</p>
-            <h2 className="mt-2 text-2xl font-black text-slate-900">Admin portal</h2>
+            <p className="text-xs font-semibold uppercase tracking-wider text-olive-700">Admin</p>
+            <h2 className="mt-2 text-2xl font-serif font-bold text-olive-900">Admin Portal</h2>
+            <p className="mt-2 text-sm text-neutral-600">Manage students, tests, reports, and settings</p>
           </button>
         </div>
 
-        <Card variant="elevated" className="rounded-[28px] p-6 md:p-8">
-          <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Login Form */}
+        <Card variant="elevated" className="p-8 md:p-10">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">Full name</label>
+              <label className="form-label">Full Name</label>
               <input
                 value={form.name}
                 onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
-                placeholder={mode === 'student' ? 'Enter your name' : 'Enter admin name'}
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-violet-400"
+                placeholder={mode === 'student' ? 'Enter your full name' : 'Enter admin name'}
+                className="form-input"
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">Email</label>
+              <label className="form-label">Email Address</label>
               <div className="relative">
-                <Mail size={16} className="pointer-events-none absolute left-4 top-3.5 text-slate-400" />
+                <Mail size={18} className="pointer-events-none absolute left-3 top-3 text-neutral-400" />
                 <input
                   type="email"
                   value={form.email}
                   onChange={(event) => setForm((prev) => ({ ...prev, email: event.target.value }))}
                   placeholder={mode === 'student' ? 'student@learnix.com' : 'admin@learnix.com'}
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-slate-900 outline-none transition focus:border-violet-400"
+                  className="form-input pl-10"
                 />
               </div>
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">Password</label>
+              <label className="form-label">Password</label>
               <div className="relative">
-                <Lock size={16} className="pointer-events-none absolute left-4 top-3.5 text-slate-400" />
+                <Lock size={18} className="pointer-events-none absolute left-3 top-3 text-neutral-400" />
                 <input
                   type="password"
                   value={form.password}
                   onChange={(event) => setForm((prev) => ({ ...prev, password: event.target.value }))}
-                  placeholder={mode === 'student' ? 'student123' : 'admin123'}
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-slate-900 outline-none transition focus:border-violet-400"
+                  placeholder="Enter your password"
+                  className="form-input pl-10"
                 />
               </div>
             </div>
 
-            <Button type="submit" fullWidth size="lg" className="justify-center gap-2">
-              <span>Continue</span>
+            <Button type="submit" fullWidth size="lg" className="gap-2 mt-8">
+              <span>Sign In</span>
               <ArrowRight size={18} />
             </Button>
           </form>
+
+          {/* Helper Text */}
+          <p className="mt-6 text-center text-sm text-neutral-600">
+            {mode === 'student'
+              ? 'Demo: Use student@learnix.com / student123'
+              : 'Demo: Use admin@learnix.com / admin123'}
+          </p>
         </Card>
       </div>
     </div>

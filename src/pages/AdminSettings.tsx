@@ -13,22 +13,29 @@ export const AdminSettings: React.FC = () => {
     <div className="page-shell">
       <div className="page-max space-y-8">
         <div>
-          <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.24em] text-cyan-600 dark:text-cyan-200">Configuration</p>
-          <h1 className="text-3xl text-slate-900 dark:text-white md:text-4xl">Portal settings</h1>
+          <p className="text-label mb-3">System Configuration</p>
+          <h1 className="font-serif text-4xl md:text-4xl font-bold text-olive-900">Portal Settings</h1>
         </div>
 
-        <Card variant="elevated" className="rounded-[28px]">
-          <div className="space-y-4">
+        <Card variant="elevated" className="border-olive-300">
+          <div className="space-y-3">
             {settings.map(({ label, icon: Icon, active }) => (
-              <div key={label} className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/80 p-4 dark:border-slate-800 dark:bg-slate-900/60">
+              <div
+                key={label}
+                className="flex items-center justify-between rounded-lg border border-olive-200 bg-olive-50 p-4"
+              >
                 <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-500/10 text-violet-600 dark:text-violet-200">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-olive-200 text-olive-700">
                     <Icon size={18} />
                   </div>
-                  <span className="text-base font-semibold text-slate-800 dark:text-slate-200">{label}</span>
+                  <span className="font-semibold text-neutral-900">{label}</span>
                 </div>
-                <button className={`flex h-7 w-12 items-center rounded-full p-1 transition-all ${active ? 'justify-end bg-violet-500' : 'justify-start bg-slate-300 dark:bg-slate-700'}`}>
-                  <span className="h-5 w-5 rounded-full bg-white" />
+                <button
+                  className={`flex h-6 w-11 items-center rounded-full p-1 transition-all ${
+                    active ? 'justify-end bg-olive-600' : 'justify-start bg-neutral-300'
+                  }`}
+                >
+                  <span className="h-4 w-4 rounded-full bg-white" />
                 </button>
               </div>
             ))}
@@ -36,7 +43,7 @@ export const AdminSettings: React.FC = () => {
         </Card>
 
         <div className="flex justify-end">
-          <Button>Save changes</Button>
+          <Button>Save Changes</Button>
         </div>
       </div>
     </div>

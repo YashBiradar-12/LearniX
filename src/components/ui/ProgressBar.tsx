@@ -24,22 +24,22 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   };
 
   const getColor = (percent: number) => {
-    if (percent < 40) return 'from-rose-500 to-rose-400';
-    if (percent < 70) return 'from-amber-400 to-yellow-300';
-    return 'from-emerald-400 to-cyan-400';
+    if (percent < 40) return 'from-red-500 to-red-400';
+    if (percent < 70) return 'from-amber-500 to-amber-400';
+    return 'from-olive-600 to-olive-500';
   };
 
   return (
     <div className="w-full">
       {(label || showPercentage) && (
         <div className="mb-2 flex items-center justify-between gap-3">
-          {label && <span className="text-sm font-medium text-slate-600 dark:text-slate-300">{label}</span>}
+          {label && <span className="text-sm font-medium text-neutral-700">{label}</span>}
           {showPercentage && (
-            <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{Math.round(percentage)}%</span>
+            <span className="text-sm font-semibold text-neutral-900">{Math.round(percentage)}%</span>
           )}
         </div>
       )}
-      <div className={`w-full overflow-hidden rounded-full bg-slate-200/80 dark:bg-slate-800/80 ${sizeStyles[size]}`}>
+      <div className={`w-full overflow-hidden rounded-full bg-olive-200 ${sizeStyles[size]}`}>
         <div
           className={`h-full rounded-full bg-gradient-to-r ${getColor(percentage)} transition-all duration-500`}
           style={{ width: `${percentage}%` }}
