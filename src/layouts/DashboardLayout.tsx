@@ -11,7 +11,6 @@ import {
   X,
   BookMarked,
   Users,
-  Shield,
   ClipboardList,
   LogOut,
 } from 'lucide-react';
